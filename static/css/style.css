@@ -1,3 +1,53 @@
+* { box-sizing: border-box; }
+
+:root {
+    --text: #1f2030;
+    --primary: #5b5ce2;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    background: #f7f7fb;
+    color: var(--text);
+    font-family: Arial, sans-serif;
+}
+
+a { color: var(--primary); }
+
+.page-shell {
+    width: min(1400px, calc(100% - 50px));
+    margin: 30px auto;
+}
+
+.hero, .auth-container {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 32px;
+    background: #fff;
+    border: 1px solid #e8e8f0;
+    border-radius: 16px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, .06);
+}
+
+.auth-form input {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #d9d9e5;
+    border-radius: 8px;
+}
+
+button {
+    padding: 10px 16px;
+    border: 0;
+    border-radius: 10px;
+    background: var(--primary);
+    color: #fff;
+    cursor: pointer;
+}
+
+.error-message { color: #b42318; }
+
 .brand {
     display: inline-flex;
     align-items: center;
@@ -25,59 +75,37 @@
     width: calc(100% - 50px);
     max-width: 1400px;
     min-height: 70px;
-
     margin: 20px auto 0;
     padding: 0 24px;
-
     display: flex;
     align-items: center;
     justify-content: space-between;
-
     background: #ffffff;
-
     border: 1px solid #e8e8f0;
     border-radius: 16px;
-
     box-shadow: 0 8px 30px rgba(0, 0, 0, 0.06);
-
-    box-sizing: border-box;
 }
 
-.main-nav {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-}
-
+.main-nav { display: flex; align-items: center; gap: 6px; }
 .main-nav a {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-
     padding: 10px 16px;
-
     font-family: 'Plus Jakarta Sans', sans-serif;
     font-size: 14px;
     font-weight: 600;
-
     color: var(--text);
     text-decoration: none;
-
     border-radius: 10px;
-
-    transition:
-        background-color 0.2s ease,
-        color 0.2s ease,
-        transform 0.2s ease;
+    transition: background-color .2s ease, color .2s ease, transform .2s ease;
 }
 
-.main-nav a:hover {
-    background: rgba(91, 92, 226, 0.10);
-    color: var(--primary);
+.main-nav a:hover { background: rgba(91, 92, 226, .10); color: var(--primary); transform: translateY(-1px); }
+.main-nav a:active { transform: translateY(0); }
 
-    transform: translateY(-1px);
-}
-
-.main-nav a:active {
-    transform: translateY(0);
+@media (max-width: 700px) {
+    .site-header { width: calc(100% - 24px); padding: 12px; flex-direction: column; gap: 10px; }
+    .brand-mark { width: 200px; }
+    .page-shell { width: calc(100% - 24px); }
 }

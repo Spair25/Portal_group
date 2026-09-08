@@ -1,76 +1,64 @@
-from django.shortcuts import render, redirect
-from django.views.generic import TemplateView, CreateView, ListView, DetailView, UpdateView, DeleteView
-from django.contrib.auth.mixins import LoginRequiredMixin
-from django.urls import reverse_lazy
-from django.contrib.auth.views import LoginView, LogoutView
-from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth import login, authenticate, logout
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from .forms import RegisterForm, ProfileForm
+from django.shortcuts import redirect, render
+from django.views.generic import TemplateView
 
+from .forms import ProfileForm, RegisterForm
 
 
 class MainView(TemplateView):
-    template_name = 'portal_group/main.html'
+    template_name = "portal_group/main.html"
+
 
 def register(request):
-    if request.method == 'POST':
+    if request.method == "POST":
         form = RegisterForm(request.POST)
-
         if form.is_valid():
             user = form.save()
             login(request, user)
-            return redirect('/')
-
+            return redirect("main")
     else:
         form = RegisterForm()
 
-    return render(request, 'accounts/register.html', {'form': form})
+    return render(request, "portal_group/register.html", {"form": form})
 
 
 def login_view(request):
-    if request.method == 'POST':
-        username = request.POST.get('username')
-        password = request.POST.get('password')
-
-        user = authenticate(
-            request,
-            username=username,
-            password=password
-        )
+    if request.method == "POST":
+        username = request.POST.get("username", "")
+        password = request.POST.get("password", "")
+        user = authenticate(request, username=username, password=password)
 
         if user is not None:
             login(request, user)
-            return redirect('/accounts/profile/')
+            return redirect("profile")
 
-        return render(request, 'accounts/login.html', {
-            'error': 'Invalid username or password'
+        return render(request, "portal_group/login.html", {
+            "error": "Invalid username or password"
         })
 
-    return render(request, 'accounts/login.html')
+    return render(request, "portal_group/login.html")
 
 
 @login_required
 def profile(request):
-    return render(request, 'accounts/profile.html')
+    return render(request, "portal_group/profile.html")
+
 
 @login_required
 def edit_profile(request):
-    if request.method == 'POST':
+    if request.method == "POST":
         form = ProfileForm(request.POST, instance=request.user)
-
         if form.is_valid():
             form.save()
-            return redirect('/accounts/profile/')
-
+            return redirect("profile")
     else:
         form = ProfileForm(instance=request.user)
 
-    return render(request, 'accounts/edit_profile.html', {
-        'form': form
-    })
+    return render(request, "portal_group/edit_profile.html", {"form": form})
+
 
 @login_required
 def logout_view(request):
     logout(request)
-    return redirect('/')
+    return redirect("main")
