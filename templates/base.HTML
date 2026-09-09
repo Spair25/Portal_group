@@ -5,20 +5,52 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    <title>Portal group</title>
+    <title>Portal Group</title>
 </head>
 <body>
-
 <header class="site-header">
     <a class="brand" href="{% url 'main' %}">
-        <span  class="brand-mark">PortalGroup</span> 
+        <span class="brand-mark">PortalGroup</span>
     </a>
+
+    <nav class="main-nav">
+
+        <a href="{% url 'main' %}">
+            Home
+        </a>
+
+        {% if user.is_authenticated %}
+
+            <a href="{% url 'profile' %}">
+                Profile
+            </a>
+
+            <a href="{% url 'logout' %}">
+                Log out
+            </a>
+
+        {% else %}
+
+            <a href="{% url 'login' %}">
+                Log in
+            </a>
+
+            <a href="{% url 'register' %}">
+                Sign up
+            </a>
+
+        {% endif %}
+
+    </nav>
 
 </header>
 
 <main class="page-shell">
-    {% block content %}{% endblock %}
-    </main>
+
+    {% block content %}
+    {% endblock %}
+
+</main>
 
 </body>
 </html>
